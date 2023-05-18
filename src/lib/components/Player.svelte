@@ -1,11 +1,10 @@
 <script>
 	import Youtube, { PlayerState } from 'svelte-youtube';
 
-	export let src;
+	export let id;
+	export let nextVideo;
 
-	let last = src.substring(src.lastIndexOf('/') + 1, src.length);
-
-	console.log(last, src);
+	console.log(id);
 
 	const options = {
 		height: '390',
@@ -15,11 +14,6 @@
 			autoplay: 1
 		}
 	};
-
-	function onStateChange(event) {
-		console.table(event.detail.data);
-		if (event.detail.data === PlayerState.ENDED) alert('video ended');
-	}
 </script>
 
-<Youtube videoId={last} {options} on:stateChange={(event) => onStateChange(event)} />
+<Youtube videoId={id} {options} on:end={(event) => nextVideo(event)} />
